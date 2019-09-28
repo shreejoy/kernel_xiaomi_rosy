@@ -2055,7 +2055,6 @@ static int fastrpc_file_free(struct fastrpc_file *fl)
 		kref_put_mutex(&fl->apps->channel[cid].kref,
 				fastrpc_channel_close, &fl->apps->smd_mutex);
 	mutex_destroy(&fl->map_mutex);
-bail:
 	fastrpc_remote_buf_list_free(fl);
 	kfree(fl);
 	return 0;
