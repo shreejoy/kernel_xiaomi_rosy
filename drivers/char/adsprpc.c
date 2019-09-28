@@ -2040,8 +2040,10 @@ static int fastrpc_file_free(struct fastrpc_file *fl)
 	hlist_del_init(&fl->hn);
 	spin_unlock(&fl->apps->hlock);
 
-	if (!fl->sctx)
-		goto bail;
+	if (!fl->sctx) {
+		kfree(fl);
+		return 0;
+	}
 
 	(void)fastrpc_release_current_dsp_process(fl);
 	if (!IS_ERR_OR_NULL(fl->init_mem))
